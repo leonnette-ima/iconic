@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <!-- المنتجات تظهر هنا -->
+        
         </tbody>
     </table>
 
@@ -76,12 +76,11 @@ const productIdInput = document.getElementById('productId');
 const colorsContainer = document.getElementById('colorsContainer');
 const sizesContainer = document.getElementById('sizesContainer');
 
-// حماية الدخول
+
 if(localStorage.getItem('loggedIn') !== 'true'){
     window.location.href = 'Login.html';
 }
 
-// مساعدة: تنظيف/إزالة تكرارات مع المحافظة على الترتيب
 function uniquePreserveOrder(arr){
     const seen = new Set();
     const out = [];
@@ -96,7 +95,7 @@ function uniquePreserveOrder(arr){
     return out;
 }
 
-// جلب الألوان والقياسات من السيرفر (مع إزالة التكرارات)
+
 async function loadColorsAndSizes() {
     try {
         const [colorsRes, sizesRes] = await Promise.all([
@@ -110,7 +109,7 @@ async function loadColorsAndSizes() {
         colorsContainer.innerHTML = '';
         sizesContainer.innerHTML = '';
 
-        // استخراج الأسماء وإزالة التكرارات
+        
         const uniqueColorNames = uniquePreserveOrder((colors || []).map(c => c.name));
         const uniqueSizeNames = uniquePreserveOrder((sizes || []).map(s => s.name));
 
@@ -143,7 +142,7 @@ async function loadColorsAndSizes() {
 
 loadColorsAndSizes();
 
-// ضبط checkboxes عند تعديل منتج (يدعم string JSON / CSV أو array) مع إزالة التكرارات
+
 function setCheckboxes(containerId, valuesStr) {
     let values = [];
     if (typeof valuesStr === 'string') {
@@ -163,7 +162,7 @@ function setCheckboxes(containerId, valuesStr) {
     });
 }
 
-// جلب كل المنتجات وعرضهم في الجدول (مع إزالة تكرار الألوان/الأحجام قبل العرض)
+
 async function loadProducts() {
     try {
         const res = await fetch(API_URL);
@@ -223,7 +222,7 @@ async function loadProducts() {
     }
 }
 
-// إضافة منتج
+
 addBtn.onclick = () => {
     formTitle.textContent = 'Ajouter Produit';
     productIdInput.value = '';
@@ -233,10 +232,10 @@ addBtn.onclick = () => {
     formContainer.style.display = 'block';
 };
 
-// الغاء الفورم
+
 cancelBtn.onclick = () => formContainer.style.display = 'none';
 
-// ارسال الفورم
+
 form.onsubmit = async (e) => {
     e.preventDefault();
     const id = productIdInput.value;
@@ -251,7 +250,7 @@ form.onsubmit = async (e) => {
     const selectedSizes = Array.from(document.querySelectorAll('input[name="sizes"]:checked'))
                            .map(cb => cb.value);
 
-    // إزالة التكرارات قبل الإرسال
+   
     formData.append('colors', JSON.stringify(uniquePreserveOrder(selectedColors)));
     formData.append('sizes', JSON.stringify(uniquePreserveOrder(selectedSizes)));
 
@@ -274,7 +273,6 @@ form.onsubmit = async (e) => {
     }
 };
 
-// تعديل منتج
 async function editProduct(id){
     try {
         const res = await fetch(`${API_URL}/${id}`);
@@ -294,7 +292,7 @@ async function editProduct(id){
     }
 }
 
-// حذف منتج
+
 async function deleteProduct(id){
     if(confirm('Voulez-vous supprimer ce produit ?')){
         try {
@@ -307,7 +305,6 @@ async function deleteProduct(id){
     }
 }
 
-// initial load
 
 
 

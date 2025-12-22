@@ -10,6 +10,9 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 
 
+
+
+
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -38,6 +41,8 @@ INSERT INTO colors (name) VALUES
 
 INSERT INTO sizes (name) VALUES 
 ('S'), ('M'), ('L'), ('XL');
+
+
 
 
 
@@ -1600,7 +1605,7 @@ INSERT INTO algeria_cities(commune_name,commune_name_ascii,daira_name,daira_name
 INSERT INTO algeria_cities(commune_name,commune_name_ascii,daira_name,daira_name_ascii,wilaya_code,wilaya_name,wilaya_name_ascii) VALUES ('حاسي الفحل','Hassi Fehal','المنصورة','Mansourah','58','المنيعة','El Menia');
 
 
--- 1. إنشاء جدول الولايات
+
 CREATE TABLE IF NOT EXISTS wilayas (
     id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
@@ -1609,13 +1614,13 @@ CREATE TABLE IF NOT EXISTS wilayas (
 
 
 
--- 3. تعبئة جدول الولايات بدون تكرار
+
 INSERT INTO wilayas (id, name)
 SELECT DISTINCT
        CAST(wilaya_code AS UNSIGNED) AS id,
        wilaya_name
 FROM algeria_cities
-ON DUPLICATE KEY UPDATE name = VALUES(name);  -- إذا كان موجود، يحدث الاسم فقط
+ON DUPLICATE KEY UPDATE name = VALUES(name); 
 
 DROP TABLE IF EXISTS communes;
 
@@ -1653,6 +1658,24 @@ CREATE TABLE IF NOT EXISTS orders (
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
+INSERT INTO categories (name) VALUES 
+('dresses'),('tops'),('outewear'),('accessories');
 
+
+SELECT * FROM categories ;
+
+DROP TABLE IF EXISTS products;
+
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    description TEXT,
+    media TEXT,
+    colors VARCHAR(255),
+    sizes VARCHAR(255),
+    category_id INT,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+)CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 

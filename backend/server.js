@@ -14,7 +14,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const db = require('./db'); 
 
 
-// routes
+
 const adminProducts = require('./routes/products');
 const productspub = require('./routes/productspub');
 
@@ -41,7 +41,7 @@ app.get('/api/wilayas', (req, res) => {
   );
 });
 
-// البلديات حسب رمز الولاية (wilaya_code)
+
 app.get('/api/communes/:wilayaId', (req, res) => {
   const wid = req.params.wilayaId;
   db.query(

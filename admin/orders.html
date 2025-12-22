@@ -39,7 +39,7 @@
           </tr>
         </thead>
         <tbody>
-          <!-- orders injected here -->
+          
         </tbody>
       </table>
       <div id="empty" style="display:none;">No orders found</div>
@@ -47,7 +47,7 @@
   </main>
 
   <script>
-    // protect admin
+   
     if(localStorage.getItem('loggedIn') !== 'true'){
       window.location.href = 'login.html';
     }
@@ -95,21 +95,21 @@
       }
     }
 
-    // action handlers (Mark Done -> PATCH/PUT if backend supports)
+    
     tbody.addEventListener('click', async (e) => {
       const btn = e.target.closest('button');
       if(!btn) return;
       const id = btn.dataset.id;
       if(btn.classList.contains('btn-confirm')){
         try {
-          // try PATCH then fallback to PUT; server may accept POST/PUT depending on implementation
+          
           const res = await fetch(`${ORDERS_API}/${encodeURIComponent(id)}`, {
             method: 'PATCH',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({ status: 'done' })
           });
           if(!res.ok){
-            // try PUT if PATCH not supported
+            
             await fetch(`${ORDERS_API}/${encodeURIComponent(id)}`, {
               method: 'PUT',
               headers: {'Content-Type':'application/json'},
